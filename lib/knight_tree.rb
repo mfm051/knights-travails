@@ -4,12 +4,18 @@ require_relative './chess_board'
 
 # Tree of possibilities for knight moves
 class KnightTree
-  attr_reader :coordinates, :children, :parent
+  attr_reader :coordinates, :parent
 
   def initialize(coordinates, parent = nil)
     @coordinates = coordinates
     @parent = parent
     @children = nil
+  end
+
+  def children
+    build_children if @children.nil?
+
+    @children
   end
 
   def build_children

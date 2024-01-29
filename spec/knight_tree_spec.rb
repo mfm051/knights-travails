@@ -12,8 +12,6 @@ describe KnightTree do
   describe '#build_children' do
     subject(:knight_tree) { described_class.new([3, 3]) }
 
-    before { knight_tree.build_children }
-
     it 'calculates all squares possible from given location' do
       children_coordinates = knight_tree.children.map(&:coordinates)
       expect(children_coordinates).to contain_exactly([2, 5], [4, 5], [1, 4], [5, 4], [1, 2], [5, 2], [2, 1], [4, 1])
