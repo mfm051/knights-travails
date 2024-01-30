@@ -4,10 +4,12 @@ require_relative './chess_board'
 
 # Tree of possibilities for knight moves
 class KnightTree
+  include Comparable
+
   attr_reader :coordinates, :parent
 
   def initialize(coordinates, parent = nil)
-    @coordinates = coordinates
+    @coordinates = check(coordinates)
     @parent = parent
     @children = nil
   end
@@ -20,6 +22,22 @@ class KnightTree
 
   def build_children
     @children = possible_moves.map { |move| KnightTree.new(move, self) }
+  end
+
+  def <=>(other)
+    coordinates <=> other
+  end
+
+  def full_path
+    path = [coordinates]
+    current = self
+
+    until current.parent.nil?
+      path.unshift(current.parent.coordinates)
+      current = current.parent
+    end
+
+    path
   end
 
   private
@@ -36,5 +54,11 @@ class KnightTree
 
       (steps_x == 2 && steps_y == 1) || (steps_x == 1 && steps_y == 2)
     end
+  end
+
+  def check(coordinates)
+    raise ArgumentError, 'Coordinates must be array with two integers' unless coordinates in [Integer, Integer]
+
+    coordinates.each { |i| raise ArgumentError, "#{i} must be between 0 and 7" unless i.between?(0, 7) }
   end
 end

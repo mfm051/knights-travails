@@ -9,6 +9,16 @@ describe KnightTree do
     end
   end
 
+  describe '#initialize' do
+    it 'returns an error if coordinates are not two integers' do
+      expect { KnightTree.new(['c', 4]) }.to raise_error ArgumentError
+    end
+
+    it 'returns an error if any coordinate is out of range' do
+      expect { KnightTree.new([8, 4]) }.to raise_error ArgumentError
+    end
+  end
+
   describe '#build_children' do
     subject(:knight_tree) { described_class.new([3, 3]) }
 
