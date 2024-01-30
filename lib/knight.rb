@@ -5,7 +5,7 @@ require_relative './knight_tree'
 # nodoc
 class Knight
   def knight_moves(initial_position, final_position)
-    return initial_position if initial_position == final_position
+    [initial_position, final_position].each { |pos| ChessBoard.check_coordinates(pos) }
 
     root = KnightTree.new(initial_position)
 

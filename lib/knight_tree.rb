@@ -9,20 +9,11 @@ class KnightTree
   attr_reader :coordinates, :parent
 
   def initialize(coordinates, parent = nil)
-    @coordinates = check(coordinates)
+    @coordinates = coordinates
     @parent = parent
-    @children = nil
   end
 
-  def children
-    build_children if @children.nil?
-
-    @children
-  end
-
-  def build_children
-    @children = possible_moves.map { |move| KnightTree.new(move, self) }
-  end
+  def children = possible_moves.map { |move| KnightTree.new(move, self) }
 
   def <=>(other)
     coordinates <=> other
@@ -54,11 +45,5 @@ class KnightTree
 
       (steps_x == 2 && steps_y == 1) || (steps_x == 1 && steps_y == 2)
     end
-  end
-
-  def check(coordinates)
-    raise ArgumentError, 'Coordinates must be array with two integers' unless coordinates in [Integer, Integer]
-
-    coordinates.each { |i| raise ArgumentError, "#{i} must be between 0 and 7" unless i.between?(0, 7) }
   end
 end
